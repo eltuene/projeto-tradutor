@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Button, Image, ScrollView, StyleSheet, View, Text, ActivityIndicator  } from "react-native"
 import * as ImagePicker from "expo-image-picker"
 import axios from "axios"
+import { API_URL } from '@env';
 
 export default function App() {
   const [image, setImage] = useState(null)
@@ -76,7 +77,7 @@ export default function App() {
 
       try {
         const response = await axios.post(
-          "http://192.168.1.114:3000/translate",
+          API_URL+"/translate",
           formData,
           {
             headers: {
