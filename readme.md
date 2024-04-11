@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Projeto de tradução de textos utilizando IA com python. API feita com Node e Express. Frontend mobile com React Native e Expo.
+Projeto de tradução de textos em imagens utilizando IA com python. API feita com Node e Express. Frontend mobile com React Native e Expo.
 
 ## Como rodar
 
@@ -16,3 +16,5 @@ Projeto de tradução de textos utilizando IA com python. API feita com Node e E
 8. Acesse a pasta `front-tradutor` e rode o comando `npm install` para instalar as dependências do React Native.
 9. Rode o comando `npm start` para iniciar o Expo.
 10. Acesse o aplicativo Expo Go no seu celular e escaneie o QR Code gerado.
+
+**OBS:** é necessário uma GPU Nvidia para rodar o projeto.
