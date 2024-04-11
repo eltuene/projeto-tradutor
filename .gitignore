@@ -1,0 +1,5 @@
+venv
+node_modules
+back_tradutor/node_modules
+front_tradutor/node_modules
+front_tradutor/.expo
