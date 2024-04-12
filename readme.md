@@ -18,3 +18,14 @@ Projeto de tradução de textos em imagens utilizando IA com python. API feita c
 10. Acesse o aplicativo Expo Go no seu celular e escaneie o QR Code gerado.
 
 **OBS:** é necessário uma GPU Nvidia para rodar o projeto.
+
+## Melhorias
+
+- Verificar se imagem tem texto
+- Colocar download do texto
+- Tradução de texto para outras línguas
+- Compartilhar texto traduzido
+- Adicionar áudio
+- Processar várias imagens ao mesmo tempo
+- Versão web
+- Grau de confiabilidade da extração do texto, sinalizar no texto
