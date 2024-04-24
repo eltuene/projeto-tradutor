@@ -1,0 +1,90 @@
+.App {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  max-width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 20px;
+  gap: 20px;
+}
+
+.dropzone-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.dropzone {
+  width: 100%;
+  padding: 20px;
+  border: 2px dashed #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  min-height: 150;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 300px;
+  display: block;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.translation {
+  background-color: #242424;
+  color: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    align-items: stretch; /* Faz os filhos esticarem para preencher a altura */
+  }
+
+  .dropzone,
+  .translation {
+    width: 50%;
+  }
+
+  .dropzone {
+    margin-bottom: 0;
+  }
+
+  .image-preview {
+    max-width: 50%;
+    max-height: unset;
+    height: auto;
+  }
+  .translation {
+    background-color: #242424;
+    color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    overflow-y: auto; /* Permite rolagem se o conteúdo for muito longo */
+  }
+}
