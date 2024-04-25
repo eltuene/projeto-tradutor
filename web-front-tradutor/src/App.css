@@ -6,6 +6,28 @@
   max-width: 100%;
 }
 
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.title-container h1 {
+  margin: 0;
+}
+
+.title-container select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  font-weight: bold;
+  color: #007bff;
+}
+
 .container {
   display: flex;
   flex-direction: column;

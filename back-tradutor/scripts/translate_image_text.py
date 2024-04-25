@@ -8,30 +8,34 @@ import spacy
 
 nlp = spacy.load("en_core_web_sm")
 
-def translate_image(image_path):
+model_mapping = {
+    'en-pt': 'Helsinki-NLP/opus-mt-tc-big-en-pt',
+    'en-es': 'Helsinki-NLP/opus-mt-en-es',
+    'en-fr': 'Helsinki-NLP/opus-mt-en-fr'
+}
+
+def translate_image(image_path, source_lang='en', target_lang='pt'):
     pytesseract.pytesseract.tesseract_cmd = ('C:/Program Files/Tesseract-OCR/Tesseract.exe')
-    # Carregando a imagem
     image = Image.open(image_path)
-
-    # Usando pytesseract para extrair o texto da imagem
     extracted_text = pytesseract.image_to_string(image)
+    if not extracted_text.strip():
+        print("Não foi encontrado texto na imagem. Verifique se a imagem está legível.")
+        return
 
-    # Separando o texto em sentenças
     doc = nlp(extracted_text)
     sentences = [sent.text.strip() for sent in doc.sents if sent.text.strip()]
 
-    # Especificando o modelo de tradução
-    model_name = "Helsinki-NLP/opus-mt-tc-big-en-pt"
+    if not sentences:
+        print("Não foi possível extrair sentenças do texto da imagem. Verifique se a imagem está legível.")
+        return
 
-    # Carregando o modelo e o tokenizador
+    model_name = model_mapping.get(f'{source_lang}-{target_lang}', 'Helsinki-NLP/opus-mt-tc-big-en-pt')
     model = MarianMTModel.from_pretrained(model_name)
     tokenizer = MarianTokenizer.from_pretrained(model_name)
 
-    # Verificando e movendo o modelo para a GPU, se disponível
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
 
-    # Traduzindo em partes, se o texto for muito longo
     translated_text_parts = []
     for sentence in sentences:
         tokenized_text = tokenizer(sentence, return_tensors="pt", padding=True).to(model.device)
@@ -40,30 +44,24 @@ def translate_image(image_path):
         translated_text_parts.append(translated_sentence)
 
     translated_text = '\n'.join(translated_text_parts)
+    save_translated_text(translated_text)
     print(translated_text)
 
-    # Salvando o texto traduzido
-    # save_translated_text(translated_text, image_path)
-
-def save_translated_text(translated_text, name):
-    # Verificando se a pasta existe, senão cria
+def save_translated_text(translated_text):
     directory = "translated_texts"
     if not os.path.exists(directory):
         os.makedirs(directory)
-
-    # Definindo o nome do arquivo
-    filename = os.path.join(directory, f"translated_text_{name}.txt")
-
-    # Salvando o texto traduzido no arquivo
+    filename = os.path.join(directory, f"translated_text.txt")
     with open(filename, 'w', encoding='utf-8') as file:
         file.write(translated_text)
-    print(f"Texto traduzido salvo em {filename}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Uso: python translate_image_text.py <nome_da_imagem>")
+        print("Uso: python translate_image_text.py <nome_da_imagem> <idioma_origem> <idioma_destino>")
         sys.exit(1)
     else:
         image_path = sys.argv[1]
+        source_lang = sys.argv[2] if len(sys.argv) > 2 else 'en'
+        target_lang = sys.argv[3] if len(sys.argv) > 3 else 'pt'
 
-        translate_image(image_path)
+        translate_image(image_path, source_lang, target_lang)
